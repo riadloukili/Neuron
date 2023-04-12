@@ -1,0 +1,22 @@
+[submodule "External/GLFW"]
+	path = External/GLFW
+	url = https://github.com/glfw/glfw
+[submodule "External/glm"]
+	path = External/glm
+	url = https://github.com/g-truc/glm
+[submodule "External/imgui"]
+	path = External/imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
+[submodule "External/spdlog"]
+	path = External/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "External/premake-lib/cmake"]
+	path = External/premake-lib/cmake
+	url = https://github.com/riadloukili/premake-cmake
+[submodule "External/premake-lib/clion"]
+	path = External/premake-lib/clion
+	url = https://github.com/Enhex/premake-clion
+[submodule "External/premake-lib/vscode"]
+	path = External/premake-lib/vscode
+	url = https://github.com/Enhex/premake-vscode

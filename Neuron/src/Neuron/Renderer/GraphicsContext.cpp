@@ -2,6 +2,7 @@
 #include "GraphicsContext.h"
 #include "RendererAPI.h"
 #include "Renderer.h"
+#include "Neuron/Platform/Vulkan/VulkanContext.h"
 
 namespace Neuron {
     Scope <GraphicsContext> GraphicsContext::Create(void *window) {
@@ -9,10 +10,8 @@ namespace Neuron {
             case RendererAPI::API::None:
                 NR_CORE_ASSERT(false, "RendererAPI::None is currently not supported!")
                 return nullptr;
-#if TODO
             case RendererAPI::API::Vulkan:
-                return CreateScope<VulkanContext>(static_cast<GLFWwindow *>(window));
-#endif
+                return CreateScope<Vulkan::VulkanContext>(static_cast<GLFWwindow *>(window));
         }
 
         NR_CORE_ASSERT(false, "Unknown RendererAPI!");

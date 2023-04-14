@@ -8,10 +8,12 @@ namespace Neuron::Vulkan::Internal {
     public:
         inline static const std::vector<const char *> s_ValidationLayers = {"VK_LAYER_KHRONOS_validation"};
 
-        static VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-                                                            VkDebugUtilsMessageTypeFlagsEXT messageType,
-                                                            const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
-                                                            void *pUserData) {
+        static VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(
+                VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
+                VkDebugUtilsMessageTypeFlagsEXT messageType,
+                const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
+                void *pUserData
+        ) {
             std::string type;
             switch (messageType) {
                 case VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
@@ -55,26 +57,30 @@ namespace Neuron::Vulkan::Internal {
             return instance.createDebugUtilsMessengerEXT(createInfo, nullptr, dldi);
         }
 
-        static void DestroyDebugUtilsMessengerEXT(vk::Instance &instance,
-                                                  vk::DebugUtilsMessengerEXT &messenger,
-                                                  vk::DispatchLoaderDynamic &dldi) {
+        static void DestroyDebugUtilsMessengerEXT(
+                vk::Instance &instance,
+                vk::DebugUtilsMessengerEXT &messenger,
+                vk::DispatchLoaderDynamic &dldi
+        ) {
             instance.destroyDebugUtilsMessengerEXT(messenger, nullptr, dldi);
         }
 
         static vk::DebugUtilsMessengerCreateInfoEXT *GetDebugMessengerCreateInfo() {
-            return new vk::DebugUtilsMessengerCreateInfoEXT({
-                                                                    vk::DebugUtilsMessengerCreateFlagsEXT(),
-                                                                    vk::DebugUtilsMessageSeverityFlagsEXT(
-                                                                            vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose |
-//                                                                            vk::DebugUtilsMessageSeverityFlagBitsEXT::eInfo |
-                                                                            vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
-                                                                            vk::DebugUtilsMessageSeverityFlagBitsEXT::eError),
-                                                                    vk::DebugUtilsMessageTypeFlagsEXT(
-                                                                            vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
-                                                                            vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
-                                                                            vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance),
-                                                                    DebugCallback
-                                                            });
+            return new vk::DebugUtilsMessengerCreateInfoEXT(
+                    {
+                            vk::DebugUtilsMessengerCreateFlagsEXT(),
+                            vk::DebugUtilsMessageSeverityFlagsEXT(
+                                    // vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose |
+                                    // vk::DebugUtilsMessageSeverityFlagBitsEXT::eInfo |
+                                    vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
+                                    vk::DebugUtilsMessageSeverityFlagBitsEXT::eError),
+                            vk::DebugUtilsMessageTypeFlagsEXT(
+                                    vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
+                                    vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
+                                    vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance),
+                            DebugCallback
+                    }
+            );
         }
     };
 

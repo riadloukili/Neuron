@@ -12,6 +12,7 @@ namespace Neuron::Vulkan {
         bool debug = false;
 #endif
         m_Instance = CreateRef<Internal::Instance>("Neuron App", debug);
+        m_GPU = CreateRef<Internal::PhysicalDevice>(m_Instance, debug);
     }
 
     void VulkanContext::SwapBuffers() {
@@ -19,8 +20,6 @@ namespace Neuron::Vulkan {
     }
 
     VulkanContext::~VulkanContext() = default;
-        delete m_Instance;
-    }
 
 
 }

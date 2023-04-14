@@ -1,5 +1,6 @@
 #include "Neuron/Renderer/GraphicsContext.h"
 #include "Neuron/Platform/Vulkan/Internal/Instance.h"
+#include "Neuron/Platform/Vulkan/Internal/PhysicalDevice.h"
 
 namespace Neuron::Vulkan {
 
@@ -15,6 +16,8 @@ namespace Neuron::Vulkan {
 
     private:
         Ref <Internal::Instance> m_Instance;
+        Ref <Internal::PhysicalDevice> m_GPU;
+
         GLFWwindow *m_Window;
     };
 

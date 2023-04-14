@@ -1,12 +1,19 @@
 #pragma once
 
 #include "Instance.h"
+#include "Surface.h"
 
 namespace Neuron::Vulkan::Internal {
 
+    struct SwapchainSupportDetails {
+        vk::SurfaceCapabilitiesKHR capabilities{};
+        std::vector<vk::SurfaceFormatKHR> formats;
+        std::vector<vk::PresentModeKHR> presentModes;
+    };
+
     class PhysicalDevice {
     public:
-        explicit PhysicalDevice(Ref<Instance> &instance, bool debug = false);
+        explicit PhysicalDevice(Ref <Instance> &instance, Ref <Surface> &surface, bool debug = false);
 
         ~PhysicalDevice();
 
@@ -19,8 +26,11 @@ namespace Neuron::Vulkan::Internal {
 
         static bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
 
+        [[nodiscard]] SwapchainSupportDetails QuerySwapchainSupport(vk::PhysicalDevice device) const;
+
     private:
-        Ref<Instance> m_Instance;
+        Ref <Instance> &m_Instance;
+        Ref <Surface> &m_Surface;
         vk::PhysicalDevice m_GPU{nullptr};
 
         bool m_Debug;

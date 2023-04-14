@@ -1,10 +1,11 @@
 #include "nrpch.h"
 #include "PhysicalDevice.h"
+#include "Queues.h"
 
 namespace Neuron::Vulkan::Internal {
 
-    PhysicalDevice::PhysicalDevice(Ref <Instance> &instance, bool debug)
-            : m_Instance(instance), m_Debug(debug) {
+    PhysicalDevice::PhysicalDevice(Ref <Instance> &instance, Ref <Surface> &surface, bool debug)
+            : m_Instance(instance), m_Surface(surface), m_Debug(debug) {
         NR_CORE_INFO("CREATING PHYSICAL DEVICE");
         m_GPU = PickPhysicalDevice();
         NR_CORE_INFO("CHOSEN GPU: {}", m_GPU.getProperties().deviceName);
@@ -36,18 +37,26 @@ namespace Neuron::Vulkan::Internal {
     }
 
     bool PhysicalDevice::IsSuitable(vk::PhysicalDevice &device, uint32_t &score) const {
-        score = 0;
+
+        QueueFamilyIndices indices = Queues::FindQueueFamilies(device, m_Surface);
 
         bool extensionsSupported = CheckDeviceExtensionSupport(device);
-        score += extensionsSupported;
 
+        bool swapchainAdequate;
+        if (extensionsSupported) {
+            SwapchainSupportDetails swapchainSupport = QuerySwapchainSupport(device);
+            swapchainAdequate = !swapchainSupport.formats.empty() && !swapchainSupport.presentModes.empty();
+        }
+
+
+        score = 0;
         auto properties = device.getProperties();
-        if(properties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu)
+        if (properties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu)
             score += 1000;
-
         score += properties.limits.maxImageDimension2D;
 
-        return extensionsSupported;
+
+        return indices.isComplete() && extensionsSupported && swapchainAdequate;
     }
 
     bool PhysicalDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device) {
@@ -63,6 +72,16 @@ namespace Neuron::Vulkan::Internal {
         }
 
         return requiredExtensions.empty();
+    }
+
+    SwapchainSupportDetails PhysicalDevice::QuerySwapchainSupport(vk::PhysicalDevice device) const {
+        SwapchainSupportDetails details;
+
+        details.capabilities = device.getSurfaceCapabilitiesKHR(m_Surface->GetNative());
+        details.formats = device.getSurfaceFormatsKHR(m_Surface->GetNative());
+        details.presentModes = device.getSurfacePresentModesKHR(m_Surface->GetNative());
+
+        return details;
     }
 
 

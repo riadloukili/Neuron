@@ -14,7 +14,7 @@ namespace Neuron::Vulkan {
         void SwapBuffers() override;
 
     private:
-        Internal::Instance *m_Instance = nullptr;
+        Ref <Internal::Instance> m_Instance;
         GLFWwindow *m_Window;
     };
 

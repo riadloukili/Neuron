@@ -1,5 +1,7 @@
 #include "nrpch.h"
 #include "Instance.h"
+
+#include <utility>
 #include "Debug.h"
 
 
@@ -9,6 +11,7 @@ namespace Neuron::Vulkan::Internal {
               m_Debug(debug) {
         NR_CORE_INFO("CREATING VULKAN INSTANCE");
         SetupInstance();
+        m_DLDI = vk::DispatchLoaderDynamic(m_Instance, vkGetInstanceProcAddr);
         SetupDebugMessenger();
     }
 
@@ -21,6 +24,9 @@ namespace Neuron::Vulkan::Internal {
     }
 
     void Instance::SetupInstance() {
+        if (m_Debug && !CheckValidationLayerSupport()) {
+            NR_CORE_ASSERT(false, "One or more validation layer is not supported!")
+        }
         // App info
         vk::ApplicationInfo appInfo = vk::ApplicationInfo(
                 m_ApplicationName.c_str(),
@@ -32,11 +38,6 @@ namespace Neuron::Vulkan::Internal {
 
         auto extensions = GetRequiredExtensions();
 
-        std::vector<const char *> layers;
-        if (m_Debug) {
-            layers = Debug::s_ValidationLayers;
-        }
-
         // Create info
         vk::InstanceCreateInfo createInfo = vk::InstanceCreateInfo(
                 vk::InstanceCreateFlags(
@@ -45,13 +46,15 @@ namespace Neuron::Vulkan::Internal {
 #endif
                 ),
                 &appInfo,
-                layers.size(),
-                layers.data(),
+                0,
+                nullptr,
                 extensions.size(),
                 extensions.data()
         );
 
         if (m_Debug) {
+            createInfo.enabledLayerCount = Debug::s_ValidationLayers.size();
+            createInfo.ppEnabledLayerNames = Debug::s_ValidationLayers.data();
             createInfo.pNext = Debug::GetDebugMessengerCreateInfo();
         }
 
@@ -76,9 +79,20 @@ namespace Neuron::Vulkan::Internal {
         return extensions;
     }
 
+    bool Instance::CheckValidationLayerSupport() {
+        auto availableLayers = vk::enumerateInstanceLayerProperties();
+
+        std::set<std::string> requiredLayers(Debug::s_ValidationLayers.begin(), Debug::s_ValidationLayers.end());
+
+        for (const auto &layer: availableLayers) {
+            requiredLayers.erase(layer.layerName);
+        }
+
+        return requiredLayers.empty();
+    }
+
     void Instance::SetupDebugMessenger() {
         if (!m_Debug) return;
-        m_DLDI = vk::DispatchLoaderDynamic(m_Instance, vkGetInstanceProcAddr);
         m_DebugMessenger = Debug::CreateDebugMessenger(m_Instance, m_DLDI);
     }
 

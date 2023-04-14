@@ -11,14 +11,14 @@ namespace Neuron::Vulkan {
 #else
         bool debug = false;
 #endif
-        m_Instance = new Internal::Instance("Neuron App", debug);
+        m_Instance = CreateRef<Internal::Instance>("Neuron App", debug);
     }
 
     void VulkanContext::SwapBuffers() {
 
     }
 
-    VulkanContext::~VulkanContext() {
+    VulkanContext::~VulkanContext() = default;
         delete m_Instance;
     }
 

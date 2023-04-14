@@ -11,12 +11,17 @@ namespace Neuron::Vulkan::Internal {
 
         ~Instance();
 
-        vk::Instance GetHandle() { return m_Instance; }
+        vk::Instance GetNative() { return m_Instance; }
 
     private:
         void SetupInstance();
-        std::vector<const char *> GetRequiredExtensions() const;
+
+        [[nodiscard]] std::vector<const char *> GetRequiredExtensions() const;
+
+        [[nodiscard]] static bool CheckValidationLayerSupport();
+
         void SetupDebugMessenger();
+
     private:
         vk::Instance m_Instance{nullptr};
         vk::DebugUtilsMessengerEXT m_DebugMessenger{nullptr};

@@ -3,7 +3,7 @@ project "GLFW"
     language "C"
     staticruntime "On"
 
-    location "%{wks.location}/External/GLFW"
+    location "%{wks.location}/External"
 
     targetdir (bin_dir)
     objdir (obj_dir)
@@ -98,7 +98,7 @@ project "ImGui"
     kind "StaticLib"
     staticruntime "On"
 
-    location "%{wks.location}/External/imgui"
+    location "%{wks.location}/External"
 
     targetdir (bin_dir)
     objdir (obj_dir)

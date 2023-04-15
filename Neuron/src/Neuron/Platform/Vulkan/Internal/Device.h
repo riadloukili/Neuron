@@ -14,7 +14,6 @@ namespace Neuron::Vulkan::Internal {
         const vk::Device &GetNative() { return m_Device; }
 
     private:
-        Ref <PhysicalDevice> m_GPU;
         vk::Device m_Device;
         bool m_Debug;
     };

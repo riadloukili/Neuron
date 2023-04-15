@@ -19,19 +19,21 @@ namespace Neuron::Vulkan::Internal {
 
         const vk::PhysicalDevice &GetNative() { return m_GPU; }
 
-    private:
-        vk::PhysicalDevice PickPhysicalDevice();
-
-        bool IsSuitable(vk::PhysicalDevice &device, uint32_t &score) const;
-
-        static bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
-
-        [[nodiscard]] SwapchainSupportDetails QuerySwapchainSupport(vk::PhysicalDevice device) const;
+        [[nodiscard]] SwapchainSupportDetails QuerySwapchainSupport() const;
 
     private:
-        Ref <Instance> m_Instance;
-        Ref <Surface> m_Surface;
+        vk::PhysicalDevice PickPhysicalDevice(const Ref <Instance> &instance) const;
+
+        static bool IsSuitable(const vk::PhysicalDevice &device, const Ref <Surface> &surface, uint32_t &score);
+
+        static bool CheckDeviceExtensionSupport(const vk::PhysicalDevice &device);
+
+        static SwapchainSupportDetails
+        QuerySwapchainSupport(const vk::PhysicalDevice &device, const Ref <Surface> &surface);
+
+    private:
         vk::PhysicalDevice m_GPU{nullptr};
+        Ref <Surface> m_Surface;
 
         bool m_Debug;
 

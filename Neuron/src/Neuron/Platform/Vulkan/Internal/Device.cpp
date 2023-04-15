@@ -5,11 +5,11 @@
 
 namespace Neuron::Vulkan::Internal {
     Device::Device(const Ref <PhysicalDevice> &physicalDevice, const Ref <Surface> &surface, bool debug)
-            : m_GPU(physicalDevice), m_Debug(debug) {
+            : m_Debug(debug) {
 
         NR_CORE_INFO("CREATING LOGICAL DEVICE");
 
-        QueueFamilyIndices indices = Queues::FindQueueFamilies(m_GPU, surface);
+        QueueFamilyIndices indices = Queues::FindQueueFamilies(physicalDevice, surface);
 
         // In case the queue families are the same, we only get one.
         std::set<uint32_t> uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};
@@ -46,7 +46,7 @@ namespace Neuron::Vulkan::Internal {
             createInfo.ppEnabledLayerNames = Debug::s_ValidationLayers.data();
         }
 
-        m_Device = m_GPU->GetNative().createDevice(createInfo);
+        m_Device = physicalDevice->GetNative().createDevice(createInfo);
 
         Queues::s_GraphicsQueue = m_Device.getQueue(indices.graphicsFamily.value(), 0);
         Queues::s_PresentQueue = m_Device.getQueue(indices.presentFamily.value(), 0);
@@ -54,6 +54,6 @@ namespace Neuron::Vulkan::Internal {
 
     Device::~Device() {
         NR_CORE_INFO("DELETING LOGICAL DEVICE");
-        vkDestroyDevice(m_Device, nullptr);
+        m_Device.destroy();
     }
 }

@@ -35,6 +35,7 @@ namespace Neuron::Vulkan::Internal {
 
         bool m_Debug;
 
+        friend class Device;
         inline static const std::vector<const char *> s_DeviceExtensions = {
                 VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 #ifdef NR_PLATFORM_MACOS

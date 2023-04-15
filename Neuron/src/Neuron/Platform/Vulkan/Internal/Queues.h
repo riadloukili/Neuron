@@ -17,7 +17,12 @@ namespace Neuron::Vulkan::Internal {
     class Queues {
     public:
         static QueueFamilyIndices FindQueueFamilies(vk::PhysicalDevice &physicalDevice, Ref <Surface> &surface);
+
         static QueueFamilyIndices FindQueueFamilies(Ref <PhysicalDevice> &physicalDevice, Ref <Surface> &surface);
+
+    public:
+        inline static vk::Queue s_GraphicsQueue{nullptr};
+        inline static vk::Queue s_PresentQueue{nullptr};
     };
 
 }

@@ -14,6 +14,7 @@ namespace Neuron::Vulkan {
         m_Instance = CreateRef<Internal::Instance>("Neuron App", debug);
         m_Surface = CreateRef<Internal::Surface>(m_Window, m_Instance);
         m_GPU = CreateRef<Internal::PhysicalDevice>(m_Instance, m_Surface, debug);
+        m_Device = CreateRef<Internal::Device>(m_GPU, m_Surface, debug);
     }
 
     void VulkanContext::SwapBuffers() {

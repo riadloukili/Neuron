@@ -4,7 +4,7 @@
 #include "Debug.h"
 
 namespace Neuron::Vulkan::Internal {
-    Device::Device(Ref <PhysicalDevice> &physicalDevice, Ref <Surface> &surface, bool debug)
+    Device::Device(const Ref <PhysicalDevice> &physicalDevice, const Ref <Surface> &surface, bool debug)
             : m_GPU(physicalDevice), m_Debug(debug) {
 
         NR_CORE_INFO("CREATING LOGICAL DEVICE");

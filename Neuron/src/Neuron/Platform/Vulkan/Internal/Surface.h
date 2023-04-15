@@ -8,15 +8,15 @@ namespace Neuron::Vulkan::Internal {
 
     class Surface {
     public:
-        Surface(GLFWwindow *window, Ref <Instance> &instance);
+        Surface(GLFWwindow *window, const Ref <Instance> &instance);
 
         ~Surface();
 
-        vk::SurfaceKHR GetNative() { return m_Surface; }
+        const vk::SurfaceKHR &GetNative() { return m_Surface; }
 
     private:
         vk::SurfaceKHR m_Surface{nullptr};
-        Ref <Instance>& m_Instance;
+        Ref <Instance> m_Instance;
     };
 
 }

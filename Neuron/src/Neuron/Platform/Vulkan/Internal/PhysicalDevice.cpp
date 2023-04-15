@@ -4,7 +4,7 @@
 
 namespace Neuron::Vulkan::Internal {
 
-    PhysicalDevice::PhysicalDevice(Ref <Instance> &instance, Ref <Surface> &surface, bool debug)
+    PhysicalDevice::PhysicalDevice(const Ref <Instance> &instance, const Ref <Surface> &surface, bool debug)
             : m_Instance(instance), m_Surface(surface), m_Debug(debug) {
         NR_CORE_INFO("CREATING PHYSICAL DEVICE");
         m_GPU = PickPhysicalDevice();

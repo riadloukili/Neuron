@@ -11,7 +11,7 @@ namespace Neuron::Vulkan::Internal {
 
         ~Instance();
 
-        vk::Instance GetNative() { return m_Instance; }
+        const vk::Instance &GetNative() { return m_Instance; }
 
     private:
         void SetupInstance();

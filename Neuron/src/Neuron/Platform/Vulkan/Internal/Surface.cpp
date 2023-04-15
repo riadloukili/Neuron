@@ -2,7 +2,7 @@
 #include "Surface.h"
 
 namespace Neuron::Vulkan::Internal {
-    Surface::Surface(GLFWwindow *window, Ref <Instance> &instance)
+    Surface::Surface(GLFWwindow *window, const Ref <Instance> &instance)
             : m_Instance(instance) {
         NR_CORE_INFO("CREATING SURFACE");
         VkSurfaceKHR cStyleSurface;

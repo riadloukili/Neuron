@@ -50,17 +50,17 @@ namespace Neuron::Vulkan::Internal {
         }
 
         static vk::DebugUtilsMessengerEXT CreateDebugMessenger(
-                vk::Instance &instance,
-                vk::DispatchLoaderDynamic &dldi
+                const vk::Instance &instance,
+                const vk::DispatchLoaderDynamic &dldi
         ) {
             auto createInfo = *GetDebugMessengerCreateInfo();
             return instance.createDebugUtilsMessengerEXT(createInfo, nullptr, dldi);
         }
 
         static void DestroyDebugUtilsMessengerEXT(
-                vk::Instance &instance,
-                vk::DebugUtilsMessengerEXT &messenger,
-                vk::DispatchLoaderDynamic &dldi
+                const vk::Instance &instance,
+                const vk::DebugUtilsMessengerEXT &messenger,
+                const vk::DispatchLoaderDynamic &dldi
         ) {
             instance.destroyDebugUtilsMessengerEXT(messenger, nullptr, dldi);
         }

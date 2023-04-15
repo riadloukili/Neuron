@@ -13,11 +13,11 @@ namespace Neuron::Vulkan::Internal {
 
     class PhysicalDevice {
     public:
-        explicit PhysicalDevice(Ref <Instance> &instance, Ref <Surface> &surface, bool debug = false);
+        explicit PhysicalDevice(const Ref <Instance> &instance, const Ref <Surface> &surface, bool debug = false);
 
         ~PhysicalDevice();
 
-        vk::PhysicalDevice GetNative() { return m_GPU; }
+        const vk::PhysicalDevice &GetNative() { return m_GPU; }
 
     private:
         vk::PhysicalDevice PickPhysicalDevice();
@@ -29,13 +29,14 @@ namespace Neuron::Vulkan::Internal {
         [[nodiscard]] SwapchainSupportDetails QuerySwapchainSupport(vk::PhysicalDevice device) const;
 
     private:
-        Ref <Instance> &m_Instance;
-        Ref <Surface> &m_Surface;
+        Ref <Instance> m_Instance;
+        Ref <Surface> m_Surface;
         vk::PhysicalDevice m_GPU{nullptr};
 
         bool m_Debug;
 
         friend class Device;
+
         inline static const std::vector<const char *> s_DeviceExtensions = {
                 VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 #ifdef NR_PLATFORM_MACOS

@@ -3,12 +3,12 @@
 
 namespace Neuron::Vulkan::Internal {
 
-    QueueFamilyIndices Queues::FindQueueFamilies(Ref <PhysicalDevice> &physicalDevice, Ref <Surface> &surface) {
+    QueueFamilyIndices Queues::FindQueueFamilies(const Ref <PhysicalDevice> &physicalDevice, const Ref <Surface> &surface) {
         auto device = physicalDevice->GetNative();
         return FindQueueFamilies(device, surface);
     }
 
-    QueueFamilyIndices Queues::FindQueueFamilies(vk::PhysicalDevice &physicalDevice, Ref <Surface> &surface) {
+    QueueFamilyIndices Queues::FindQueueFamilies(const vk::PhysicalDevice &physicalDevice, const Ref <Surface> &surface) {
         QueueFamilyIndices indices;
 
         // Getting all the queue families for a device

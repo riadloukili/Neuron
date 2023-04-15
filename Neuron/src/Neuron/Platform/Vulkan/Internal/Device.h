@@ -7,14 +7,14 @@ namespace Neuron::Vulkan::Internal {
 
     class Device {
     public:
-        explicit Device(Ref <PhysicalDevice> &physicalDevice, Ref <Surface> &surface, bool debug = false);
+        explicit Device(const Ref <PhysicalDevice> &physicalDevice, const Ref <Surface> &surface, bool debug = false);
 
         ~Device();
 
-        vk::Device GetNative() { return m_Device; }
+        const vk::Device &GetNative() { return m_Device; }
 
     private:
-        Ref <PhysicalDevice> &m_GPU;
+        Ref <PhysicalDevice> m_GPU;
         vk::Device m_Device;
         bool m_Debug;
     };

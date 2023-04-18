@@ -2,6 +2,8 @@
 
 #include <string>
 #include <utility>
+#include <glm/glm.hpp>
+
 #include "Base.h"
 #include "Neuron/Events/Event.h"
 
@@ -30,6 +32,8 @@ namespace Neuron {
         virtual uint32_t GetWidth() const = 0;
 
         virtual uint32_t GetHeight() const = 0;
+
+        virtual const glm::u32vec2 GetFramebufferSize() const = 0;
 
         virtual void SetEventCallback(const EventCallbackFn &callback) = 0;
 

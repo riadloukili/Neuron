@@ -44,7 +44,7 @@ namespace Neuron {
             m_Window = glfwCreateWindow((int) props.Width, (int) props.Height, m_Data.Title.c_str(), nullptr, nullptr);
             ++s_GLFWWindowCount;
         }
-        m_Context = GraphicsContext::Create(m_Window);
+        m_Context = GraphicsContext::Create(this);
         m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -149,5 +149,11 @@ namespace Neuron {
         if (s_GLFWWindowCount == 0) {
             glfwTerminate();
         }
+    }
+
+    const glm::u32vec2 DesktopWindow::GetFramebufferSize() const {
+        int width, height;
+        glfwGetFramebufferSize(m_Window, &width, &height);
+        return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
     }
 }

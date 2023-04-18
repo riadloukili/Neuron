@@ -15,9 +15,11 @@ namespace Neuron {
 
         void OnUpdate() override;
 
-        uint32_t GetWidth() const override { return m_Data.Width; }
+        [[nodiscard]] uint32_t GetWidth() const override { return m_Data.Width; }
 
-        uint32_t GetHeight() const override { return m_Data.Height; }
+        [[nodiscard]] uint32_t GetHeight() const override { return m_Data.Height; }
+
+        [[nodiscard]] const glm::u32vec2 GetFramebufferSize() const override;
 
         void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 

@@ -3,12 +3,13 @@
 #include <vulkan/vulkan.hpp>
 #include <GLFW/glfw3.h>
 #include "Instance.h"
+#include "Neuron/Core/Window.h"
 
 namespace Neuron::Vulkan::Internal {
 
     class Surface {
     public:
-        Surface(GLFWwindow *window, const Ref <Instance> &instance);
+        Surface(Window *window, const Ref <Instance> &instance);
 
         ~Surface();
 

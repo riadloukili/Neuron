@@ -3,12 +3,14 @@
 #include "Neuron/Platform/Vulkan/Internal/PhysicalDevice.h"
 #include "Neuron/Platform/Vulkan/Internal/Surface.h"
 #include "Neuron/Platform/Vulkan/Internal/Device.h"
+#include "Neuron/Platform/Vulkan/Internal/Swapchain.h"
+#include "Neuron/Platform/Desktop/DesktopWindow.h"
 
 namespace Neuron::Vulkan {
 
     class VulkanContext : public GraphicsContext {
     public:
-        explicit VulkanContext(GLFWwindow *window);
+        explicit VulkanContext(Window *window);
 
         ~VulkanContext() override;
 
@@ -21,8 +23,9 @@ namespace Neuron::Vulkan {
         Ref <Internal::Surface> m_Surface;
         Ref <Internal::PhysicalDevice> m_GPU;
         Ref <Internal::Device> m_Device;
+        Ref <Internal::Swapchain> m_Swapchain;
 
-        GLFWwindow *m_Window;
+        Window *m_Window;
     };
 
 }
